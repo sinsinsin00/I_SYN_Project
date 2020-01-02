@@ -271,7 +271,7 @@ class isyn:
                     self.error_check_num = 0
 
             # start face_recognition
-            self.open_face()
+            #self.open_face()
             # show display
             cv2.imshow("opencv", self.cv_image), cv2.waitKey(1)
 

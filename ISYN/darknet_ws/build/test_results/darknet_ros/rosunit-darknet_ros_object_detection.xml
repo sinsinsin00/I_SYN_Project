@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="3" failures="1" disabled="2" errors="0" timestamp="2019-10-02T15:53:37" time="6.874" name="AllTests">
+  <testsuite name="ObjectDetection" tests="3" failures="1" disabled="2" errors="0" time="6.874">
+    <testcase name="DISABLED_DetectDog" status="notrun" time="0" classname="ObjectDetection" />
+    <testcase name="DetectANYmal" status="run" time="6.874" classname="ObjectDetection">
+      <failure message="/home/gom/darknet_workspace/src/darknet_ros/darknet_ros/test/ObjectDetection.cpp:192&#x0A;Expected: (centerErrorPersonX) &lt; (30), actual: 259.5 vs 30" type=""><![CDATA[/home/gom/darknet_workspace/src/darknet_ros/darknet_ros/test/ObjectDetection.cpp:192
+Expected: (centerErrorPersonX) < (30), actual: 259.5 vs 30]]></failure>
+      <failure message="/home/gom/darknet_workspace/src/darknet_ros/darknet_ros/test/ObjectDetection.cpp:193&#x0A;Expected: (centerErrorPersonY) &lt; (30), actual: 284.5 vs 30" type=""><![CDATA[/home/gom/darknet_workspace/src/darknet_ros/darknet_ros/test/ObjectDetection.cpp:193
+Expected: (centerErrorPersonY) < (30), actual: 284.5 vs 30]]></failure>
+    </testcase>
+    <testcase name="DISABLED_DetectPerson" status="notrun" time="0" classname="ObjectDetection" />
+  </testsuite>
+</testsuites>

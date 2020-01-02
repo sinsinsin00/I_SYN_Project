@@ -1,0 +1,8 @@
+prefix=/home/gom/isyn_ws/devel
+
+Name: isyn_navigation
+Description: Description of isyn_navigation
+Version: 1.2.1
+Cflags: 
+Libs: -L/home/gom/isyn_ws/devel/lib 
+Requires: 

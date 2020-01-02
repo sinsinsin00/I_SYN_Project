@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>isyn</name>
+  <version>1.0.0</version>
+  <description>
+    ROS packages for isyn project (meta package)
+  </description>
+  
+  <license>Apache 2.0</license>
+  <license>BSD</license>
+  
+  <author email="sinsinsin01@gmail.com">Gwang Sub Sin</author>
+  <author email="Secret007.KY@gmail.com">Geum Yeong Yang</author>
+  <author email="zzacksarang@gmail.com">Jeong Geun Yoo</author>
+  <author email="moodalz@outlook.kr">Moo Yong Yoon</author>
+  <maintainer email="zzacksarang@gmail.com">Jeong Geun Yoo</maintainer>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <exec_depend>isyn_navigation</exec_depend>
+  <exec_depend>bebop_driver</exec_depend>
+  <exec_depend>bebop_msgs</exec_depend>
+  <exec_depend>bebop_tools</exec_depend>
+  <exec_depend>bebop_description</exec_depend>
+  
+  <export>
+    <metapackage/>
+  </export>
+</package>

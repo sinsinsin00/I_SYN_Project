@@ -1,0 +1,2 @@
+opencv_isyn
+-DCATKIN_DEVEL_PREFIX=/home/gom/opencv_isyn_ws/devel -DCMAKE_INSTALL_PREFIX=/home/gom/opencv_isyn_ws/install -G Unix Makefiles

@@ -20,7 +20,7 @@ class Bebop:
 
         # bebop info
         #sub
-        self.bebop_odom_sub = rospy.Subscriber('/bebop/odom', Odometry, self.callback_bebop_odom, queue_size=5)
+        self.bebop_odom_sub = rospy.Subscriber('/orb_slam2_mono/odom', Odometry, self.callback_bebop_odom, queue_size=5)
         self.bebop_altitude_sub = rospy.Subscriber('/bebop/states/ardrone3/PilotingState/AltitudeChanged',Ardrone3PilotingStateAltitudeChanged,self.
                                                    callback_bebop_takeoff_stat,queue_size = 1)
 
@@ -60,6 +60,9 @@ class Bebop:
         self.thresh_Alignment_max = 50
         self.thresh_Alignment_min = -50
         self.curr_bebop_takeoff_stat = 0
+        self.curr_point_move_all_clear = 0
+        self.curr_bebop_odom_z = 0
+
         #init flag
         self.set_Alignment_flag = 0
         self.error_check_num = 0
@@ -82,7 +85,7 @@ class Bebop:
 
     def callback_point_move_all_clear(self,point_move_all_clear_data):
         self.curr_point_move_all_clear = point_move_all_clear_data.data
-
+        print('curr_point_move_all_clear : %d ' % self.curr_point_move_all_clear)
 
     def callback_bebop_odom(self,bebop_odom_data):
         self.curr_bebop_odom_z = bebop_odom_data.pose.pose.orientation.z
@@ -115,11 +118,13 @@ class Bebop:
         if self.bebop_mode_msg == 1:
             self.curr_bebop_status_msg = 0
 
+
         # if self.curr_bebop_takeoff_stat == 0 :
         #     self.curr_bebop_status_msg = 0
         #     self.bebop_mode_msg = 0
 
-        if self.bebop_mode_msg == 2 and self.curr_isyn_status_msg == 0 and self.curr_point_move_all_clear == 1:
+        if self.curr_point_move_all_clear == 1:
+            self.bebop_mode_msg = 2
             self.curr_bebop_status_msg = 1
             self.point_local_scan_clear = 0
             self.msg.angular.x = self.msg.angular.y = self.msg.angular.z = 0
@@ -127,6 +132,7 @@ class Bebop:
 
         if self.bebop_mode_msg == 2 and self.curr_isyn_status_msg == 1:
             self.curr_bebop_status_msg = 2
+
 
         if self.bebop_mode_msg == 2 and self.curr_isyn_status_msg == 2:
             self.curr_bebop_status_msg = 3
@@ -152,6 +158,7 @@ class Bebop:
                         if (self.split_Alignment_data[i] < self.thresh_Alignment_max):
                             self.msg.angular.z = self.curr_angular_speed
                             self.msg.angular.x = self.msg.angular.y = 0
+
                         if (self.split_Alignment_data[i] > self.thresh_Alignment_min):
                             self.msg.angular.z = - self.curr_angular_speed
                             self.msg.angular.x = self.msg.angular.y = 0
@@ -198,7 +205,7 @@ class Bebop:
 
             if self.curr_bebop_status_msg == 3 and self.point_local_scan_clear == 0:
                 limit_odom_z = self.curr_bebop_odom_z
-                print(limit_odom_z)
+                print("limit_odom_z : %d" % limit_odom_z)
                 while(1) :
                     self.msg.angular.z = self.curr_angular_speed
                     self.bebop_control_pub.publish(self.msg)
@@ -208,9 +215,11 @@ class Bebop:
                             print("start detect person center")
                             self.set_detect_person_center()
                     if self.curr_bebop_odom_z == limit_odom_z and self.point_local_scan_clear == 1:
-                        self.scan_all_clear_pub.publish(1)
-                        self.curr_point_move_all_clear = 0
                         self.bebop_mode_msg = 1
+                        self.point_local_scan_clear = 0
+                        self.curr_point_move_all_clear = 0
+                        self.scan_all_clear_pub.publish(1)
+                        self.scan_delay = 0
                         break
                     rospy.sleep(0.045)
 
@@ -262,9 +271,9 @@ if __name__ == "__main__":
         if os.name != 'nt':
             settings = termios.tcgetattr(sys.stdin)
         bebop = Bebop()
-        key_thread = threading.Thread(target=key_control)
-        key_thread.daemon = True
-        key_thread.start()
+        # key_thread = threading.Thread(target=key_control)
+        # key_thread.daemon = True
+        # key_thread.start()
         bebop_move_thread = threading.Thread(target=bebop.bebop_move)
         bebop_move_thread.daemon = True
         bebop_move_thread.start()

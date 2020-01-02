@@ -1,0 +1,2 @@
+isyn/bebop_description:isyn/bebop_driver:isyn/bebop_msgs:isyn/isyn:isyn/isyn_navigation
+-DCATKIN_DEVEL_PREFIX=/home/gom/isyn_ws/devel -DCMAKE_INSTALL_PREFIX=/home/gom/isyn_ws/install -G Unix Makefiles

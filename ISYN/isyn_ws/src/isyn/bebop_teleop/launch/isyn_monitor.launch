@@ -1,0 +1,21 @@
+<launch>
+    <!-- Arguments -->
+    <arg name="file_ui_location" default="$(find bebop_teleop)/ui/isyn_main_window.ui"/>
+    <arg name="file_map_location" default="$(find bebop_teleop)/map/classroom.png"/>
+    <arg name="img_takeoff_location" default="$(find bebop_teleop)/icon/take_off.jpg"/>
+    <arg name="img_land_location" default="$(find bebop_teleop)/icon/land.jpg"/>
+    <arg name="img_emergency_location" default="$(find bebop_teleop)/icon/emergency.jpg"/>
+    <arg name="img_snapshot_location" default="$(find bebop_teleop)/icon/snapshot.jpg"/>
+
+    <arg name="open_rviz" default="true"/>
+
+    <!-- ISYN GUI Monitor -->
+    <node pkg="bebop_teleop" type="isyn_monitor.py" name="isyn_monitor" output="screen">
+       <param name="file_ui" type="string" value="$(arg file_ui_location)" />
+       <param name="file_map" type="string" value="$(arg file_map_location)" />
+       <param name="img_takeoff" type="string" value="$(arg img_takeoff_location)" />
+       <param name="img_land" type="string" value="$(arg img_land_location)" />
+       <param name="img_emergency" type="string" value="$(arg img_emergency_location)" />
+       <param name="img_snapshot" type="string" value="$(arg img_snapshot_location)" />
+    </node>
+</launch>
